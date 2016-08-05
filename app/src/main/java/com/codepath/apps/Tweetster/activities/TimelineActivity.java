@@ -1,11 +1,16 @@
-package com.codepath.apps.Tweetster;
+package com.codepath.apps.Tweetster.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.widget.ListView;
 
-import com.codepath.apps.Tweetster.models.Tweet;
+import com.codepath.apps.Tweetster.R;
+import com.codepath.apps.Tweetster.TwitterApplication;
+import com.codepath.apps.Tweetster.TwitterClient;
+import com.codepath.apps.Tweetster.adapters.TweetsRecyclerViewAdapter;
+import com.codepath.apps.Tweetster.models.TweetModel;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -17,21 +22,29 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
     private TwitterClient client;
-    private TweetsArrayAdapter aTweets;
-    private ArrayList<Tweet> tweets;
-    private ListView lvTweets;
+    private TweetsRecyclerViewAdapter adapter;
+    private ArrayList<Object> tweets;
+    private RecyclerView rvTweets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_timeline);
-        lvTweets =(ListView)findViewById(R.id.lvTweets);
+
+        rvTweets =(RecyclerView) findViewById(R.id.lvTweets);
         // Create the arraylist (data source)
         tweets = new ArrayList<>();
         //construct the adapter from data source
-        aTweets = new TweetsArrayAdapter(this, tweets);
+        adapter = new TweetsRecyclerViewAdapter(this, tweets);
+        Log.d("onCreate: ", adapter.toString());
+        StaggeredGridLayoutManager gridLayoutManager =
+                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        rvTweets.setLayoutManager(gridLayoutManager);
+//        rvTweets.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         //Connect adapter to list view
-        lvTweets.setAdapter(aTweets);
+        rvTweets.setAdapter(adapter);
 
         //get the client
         client = TwitterApplication.getRestClient(); //Singleton client
@@ -47,7 +60,11 @@ public class TimelineActivity extends AppCompatActivity {
                 //Deserialize JSON
                 //Create models and add them to the adapter
                 //load the model data into list view
-                aTweets.addAll(Tweet.fromJSONArray(json));
+                tweets.addAll(TweetModel.fromJsonArray(json));
+                Log.d("Arraylist", tweets.toString());
+                adapter.notifyDataSetChanged();
+//                rvTweets.scrollToPosition(0);
+
             }
 
             @Override
@@ -58,4 +75,3 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 }
-

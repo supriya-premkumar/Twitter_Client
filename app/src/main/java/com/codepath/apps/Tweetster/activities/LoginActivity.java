@@ -1,4 +1,4 @@
-package com.codepath.apps.Tweetster;
+package com.codepath.apps.Tweetster.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.codepath.apps.Tweetster.R;
+import com.codepath.apps.Tweetster.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
