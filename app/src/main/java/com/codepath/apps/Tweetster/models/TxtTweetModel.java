@@ -2,6 +2,7 @@ package com.codepath.apps.Tweetster.models;
 
 import android.text.format.DateUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +21,13 @@ public class TxtTweetModel implements Serializable {
     String timeStamp;
     String profileImageUrl;
     Long id;
+    String mediaUrl;
+
+
+    public String getMediaUrl() {
+        return mediaUrl;
+    }
+
 
     public String getScreenName() {
         return screenName;
@@ -69,14 +77,26 @@ public class TxtTweetModel implements Serializable {
             if (duration.contains("minutes")) {
                 duration = duration.replace("minutes", "m");
             }
+            if (duration.contains("minute")) {
+                duration = duration.replace("minute", "m");
+            }
             if (duration.contains("hour")) {
                 duration = duration.replace("hour", "h");
+            }
+            if (duration.contains("hours")) {
+                duration = duration.replace("hours", "h");
             }
             if (duration.contains("second")) {
                 duration = duration.replace("second", "s");
             }
+            if (duration.contains("seconds")) {
+                duration = duration.replace("seconds", "s");
+            }
             if (duration.contains("days")) {
                 duration = duration.replace("days", "d");
+            }
+            if (duration.contains("day")) {
+                duration = duration.replace("day", "d");
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -107,6 +127,18 @@ public class TxtTweetModel implements Serializable {
             this.screenName = "@" + user.getString("screen_name");
             this.profileImageUrl = user.getString("profile_image_url");
             this.timeStamp = rawTweetData.getString("created_at");
+            JSONObject media = rawTweetData.getJSONObject("entities");
+            if(media.has("media")){
+                JSONArray mediaArray = media.getJSONArray("media");
+                if(mediaArray.length()>0){
+                    JSONObject mediaArrayObject = mediaArray.getJSONObject(0);
+                    if(mediaArrayObject.getString("type").equals("photo")){
+                        this.mediaUrl = mediaArray.getJSONObject(0).getString("media_url");
+                    }else if(mediaArrayObject.getString("type").equals("video"));{
+
+                    }
+                }
+            }
 
 
         } catch (JSONException e) {

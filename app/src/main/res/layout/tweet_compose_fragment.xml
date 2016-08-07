@@ -61,6 +61,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/etTweet"
             android:maxLength="140"
+            android:hint="@string/what_s_happening"
 
             />
     </android.support.design.widget.TextInputLayout>

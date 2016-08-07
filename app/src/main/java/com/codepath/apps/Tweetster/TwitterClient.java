@@ -47,7 +47,7 @@ public class TwitterClient extends OAuthBaseClient {
         //specify the params
 
         RequestParams params = new RequestParams();
-        params.put("count", 4);
+        params.put("count", 25);
         if (page == 0){
             Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: "+ String.valueOf(max_id));
             params.put("since_id", since_id);

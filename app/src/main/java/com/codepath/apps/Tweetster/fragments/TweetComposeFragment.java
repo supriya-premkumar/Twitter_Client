@@ -1,5 +1,7 @@
 package com.codepath.apps.Tweetster.fragments;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
@@ -110,6 +112,16 @@ public class TweetComposeFragment extends DialogFragment {
 
         return v;
     }
+
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
+    }
+
 
     private void postTweet(String tweet){
         client.postTweet(tweet, new JsonHttpResponseHandler() {

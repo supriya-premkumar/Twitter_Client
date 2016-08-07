@@ -1,6 +1,7 @@
 package com.codepath.apps.Tweetster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
+import com.codepath.apps.Tweetster.activities.DetailedTweetActivity;
 import com.codepath.apps.Tweetster.models.TxtTweetModel;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         public TextView tvTimeStamp;
         public ImageView ivPoster;
         public ImageView ivResponse;
+
 
         public ImageView getIvPoster() {
             return ivPoster;
@@ -186,12 +189,12 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 //        switch (viewHolder.getItemViewType()) {
 //            case IMG_ARTICLE:
         ViewHolder1 vh1 = (ViewHolder1) viewHolder;
-//                    vh1.getTvBody().setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startArticleDisplayActivity(position);
-//                        }
-//                    });
+        vh1.getTvBody().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startDetailedTweetActivity(position);
+            }
+        });
         configureViewHolder(vh1, position);
 //                break;
 //                case TXT_ARTICLE:
@@ -207,17 +210,18 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 //    }
 
-//    private void startArticleDisplayActivity(int position) {
-//        Intent intent = new Intent(getmContext(), DetailedTweetActivity.class);
-//        Object tweets = mTweets.get(position);
-////        if (tweets instanceof TweetModel) {
-////            intent.putExtra("url", ((TweetModel) tweets).getWebUrl());
-////        } else {
-////            intent.putExtra("url", ((TxtArticleModel) article).getWebUrl());
-////        }
-//
-//        getmContext().startActivity(intent);
-//    }
+    private void startDetailedTweetActivity (int position) {
+        Intent intent = new Intent(getmContext(), DetailedTweetActivity.class);
+        Object tweets = mTweets.get(position);
+        intent.putExtra("txt_tweet", ((TxtTweetModel)tweets));
+//        if (tweets instanceof TweetModel) {
+//            intent.putExtra("url", ((TweetModel) tweets).getWebUrl());
+//        } else {
+//            intent.putExtra("url", ((TxtArticleModel) article).getWebUrl());
+//        }
+
+        getmContext().startActivity(intent);
+    }
 
     private void configureViewHolder(ViewHolder1 vh1, int position) {
         TxtTweetModel tweet = (TxtTweetModel) mTweets.get(position);
@@ -227,6 +231,13 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             vh1.getTvUserName().setText(tweet.getScreenName());
             vh1.getIvProfilePhoto().setImageResource(0);
             vh1.getTvTimeStamp().setText(tweet.getTimeStamp());
+
+            if(tweet.getMediaUrl()!= null){
+                vh1.ivPoster.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(tweet.getMediaUrl()).into(vh1.ivPoster);
+            }else{
+                vh1.ivPoster.setVisibility(View.GONE);
+            }
 
 
             String thumbnail = tweet.getProfileImageUrl();

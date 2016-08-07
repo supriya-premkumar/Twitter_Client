@@ -1,5 +1,6 @@
 package com.codepath.apps.Tweetster.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
     private TwitterClient client;
     private TweetsRecyclerViewAdapter adapter;
     private FloatingActionButton fabCompose;
@@ -92,9 +93,17 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        populateTimeline(0);
+    }
+
     private void populateTimeline(int page) {
         long since_id = 1;
         long max_id = 1;
+        if (page == 0) {
+            tweets.clear();
+        }
         if (!tweets.isEmpty()) {
             max_id = ((TxtTweetModel) tweets.get(0)).getId() - 1;
             since_id = ((TxtTweetModel) tweets.get(tweets.size() - 1)).getId();
@@ -131,25 +140,4 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode == Activity.RESULT_OK){
-//            String composedTweet = data.getStringExtra(ADD_TWEET);
-//            TwitterApplication.getRestClient().postTweet(composedTweet, new JsonHttpResponseHandler(){
-//
-//            });
-//        }
-//    }
-//
-//    public void postTweet(View v){
-//        EditText compose = (EditText) findViewById(R.id.etTweet);
-//        String composedTweet = compose.getText().toString();
-//
-//        Intent intent = new Intent();
-//        intent.putExtra(TimelineActivity.ADD_TWEET, composedTweet);
-//        setResult(RESULT_OK, intent);
-//        finish();
-//
-//    }
 }
