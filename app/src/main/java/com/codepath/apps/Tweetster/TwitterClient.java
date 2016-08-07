@@ -1,6 +1,7 @@
 package com.codepath.apps.Tweetster;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -41,19 +42,28 @@ public class TwitterClient extends OAuthBaseClient {
         client.get(apiUrl, params, handler);
     }
 
-    public void getHomeTimeline(AsyncHttpResponseHandler handler) {
+    public void getHomeTimeline(long since_id, long max_id, int page, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         //specify the params
 
         RequestParams params = new RequestParams();
-        params.put("count", 25);
-        params.put("since_id", 1);
+        params.put("count", 4);
+        if (page == 0){
+            Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: "+ String.valueOf(max_id));
+            params.put("since_id", since_id);
+
+        } else{
+            Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: "+ String.valueOf(max_id));
+            params.put("since_id", since_id);
+            params.put("max_id", max_id);
+        }
+
         //Execute the request
         getClient().get(apiUrl, params, handler);
 
     }
 
-    //compose tweet
+    //compose txt_tweet
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
      * 	  i.e getApiUrl("statuses/home_timeline.json");

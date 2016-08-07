@@ -11,11 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
-import com.codepath.apps.Tweetster.models.TweetModel;
 import com.codepath.apps.Tweetster.models.TxtTweetModel;
 
 import java.util.List;
-
 
 public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -23,6 +21,22 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         public ImageView ivProfilePhoto;
         public TextView tvUserName;
         public TextView tvName;
+        public TextView tvBody;
+        public TextView tvTimeStamp;
+        public ImageView ivPoster;
+        public ImageView ivResponse;
+
+        public ImageView getIvPoster() {
+            return ivPoster;
+        }
+
+        public ImageView getIvResponse() {
+            return ivResponse;
+        }
+
+        public TextView getTvTimeStamp() {
+            return tvTimeStamp;
+        }
 
 
         public void setTvName(TextView tvName) {
@@ -46,8 +60,6 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             this.tvUserName = tvUserName;
         }
 
-        public TextView tvBody;
-
 
         public TextView getTvUserName() {
             return tvUserName;
@@ -66,14 +78,36 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             super(itemView);
 
             ivProfilePhoto = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-            tvUserName= (TextView) itemView.findViewById(R.id.tvUserName);
+            tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
+            tvTimeStamp = (TextView) itemView.findViewById(R.id.tvTimeStamp);
+            ivPoster = (ImageView)itemView.findViewById(R.id.ivMedia);
+            ivResponse = (ImageView)itemView.findViewById(R.id.ivReply);
+
         }
 
     }
 
 //    public static class ViewHolder2 extends RecyclerView.ViewHolder {
+//        public TextView tvName;
+//        public TextView tvUserName;
+//        public TextView tvBody;
+//        public ImageView ivPost;
+//
+//
+//        public ImageView getIvPost() {
+//            return ivPost;
+//        }
+//
+//
+//        public TextView getTvTimeStamp() {
+//            return tvTimeStamp;
+//        }
+//
+//        public TextView tvTimeStamp;
+//
+//
 //        public TextView getTvUserName() {
 //            return tvUserName;
 //        }
@@ -90,8 +124,6 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 //            this.tvBody = tvBody;
 //        }
 //
-//        public TextView tvUserName;
-//        public TextView tvBody;
 //
 //        public TextView getTvName() {
 //            return tvName;
@@ -101,7 +133,6 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 //            this.tvName = tvName;
 //        }
 //
-//        public TextView tvName;
 //
 //        public ViewHolder2(View itemView) {
 //            super(itemView);
@@ -109,15 +140,21 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 //            tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
 //            tvBody = (TextView) itemView.findViewById(R.id.tvBody);
 //            tvName = (TextView) itemView.findViewById(R.id.tvName);
+//            tvTimeStamp = (TextView) itemView.findViewById(R.id.tvTimeStamp);
+//            ivPost = (ImageView)itemView.findViewById(R.id.ivMedia)
+//
 //        }
 //    }
+
     private List<Object> mTweets;
     private final int IMG_ARTICLE = 1, TXT_ARTICLE = 2;
     private Context mContext;
+
     public TweetsRecyclerViewAdapter(Context context, List<Object> tweets) {
         this.mTweets = tweets;
         this.mContext = context;
-         }
+    }
+
     private Context getmContext() {
         return mContext;
 
@@ -130,32 +167,33 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        switch (viewType) {
-            case IMG_ARTICLE:
-                View v1 = inflater.inflate(R.layout.tweet, parent, false);
-                viewHolder = new ViewHolder1(v1);
-                break;
+//        switch (viewType) {
+//            case IMG_ARTICLE:
+        View v1 = inflater.inflate(R.layout.txt_tweet, parent, false);
+        viewHolder = new ViewHolder1(v1);
+//                break;
 //            case TXT_ARTICLE:
-//                View v2 = inflater.inflate(R.layout.tweet2, parent, false);
+//                View v2 = inflater.inflate(R.layout.img_tweet, parent, false);
 //                viewHolder = new ViewHolder2(v2);
 //                break;
-        }
-        return viewHolder;    }
+//        }
+        return viewHolder;
+    }
 
     @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
-            switch (viewHolder.getItemViewType()) {
-                case IMG_ARTICLE:
-                    ViewHolder1 vh1 = (ViewHolder1) viewHolder;
+//        switch (viewHolder.getItemViewType()) {
+//            case IMG_ARTICLE:
+        ViewHolder1 vh1 = (ViewHolder1) viewHolder;
 //                    vh1.getTvBody().setOnClickListener(new View.OnClickListener() {
 //                        @Override
 //                        public void onClick(View view) {
 //                            startArticleDisplayActivity(position);
 //                        }
 //                    });
-                    configureViewHolder(vh1, position);
-                    break;
+        configureViewHolder(vh1, position);
+//                break;
 //                case TXT_ARTICLE:
 //                    ViewHolder2 vh2 = (ViewHolder2) viewHolder;
 ////                    vh2.getTvBody().setOnClickListener(new View.OnClickListener() {
@@ -166,8 +204,8 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 ////                    });
 //                    configureViewHolder(vh2, position);
 //                    break;
-            }
     }
+//    }
 
 //    private void startArticleDisplayActivity(int position) {
 //        Intent intent = new Intent(getmContext(), DetailedTweetActivity.class);
@@ -183,13 +221,15 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     private void configureViewHolder(ViewHolder1 vh1, int position) {
         TxtTweetModel tweet = (TxtTweetModel) mTweets.get(position);
-        if (tweet!= null) {
-            vh1.getTvBody().setText(tweet.getBody());
-            vh1.getTvName().setText(tweet.getProfileName());
-            vh1.getTvUserName().setText("@" + tweet.getUserName());
+        if (tweet != null) {
+            vh1.getTvBody().setText(tweet.getTweet());
+            vh1.getTvName().setText(tweet.getUserName());
+            vh1.getTvUserName().setText(tweet.getScreenName());
             vh1.getIvProfilePhoto().setImageResource(0);
+            vh1.getTvTimeStamp().setText(tweet.getTimeStamp());
 
-            String thumbnail = tweet.getImage();
+
+            String thumbnail = tweet.getProfileImageUrl();
             if (!TextUtils.isEmpty(thumbnail)) {
                 Glide.with(getmContext()).load(thumbnail).fitCenter().into(vh1.getIvProfilePhoto());
 //                .resize(512, 256)
@@ -213,13 +253,13 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         return mTweets.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (mTweets.get(position) instanceof TweetModel) {
-            return IMG_ARTICLE;
-        } else if (mTweets.get(position) instanceof TweetModel) {
-            return TXT_ARTICLE;
-        }
-        return -1;
-    }
+//    @Override
+//    public int getItemViewType(int position) {
+//        if (mTweets.get(position) instanceof TweetModel) {
+//            return IMG_ARTICLE;
+//        } else if (mTweets.get(position) instanceof TweetModel) {
+//            return TXT_ARTICLE;
+//        }
+//        return -1;
+//    }
 }

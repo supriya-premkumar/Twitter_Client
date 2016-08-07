@@ -18,61 +18,40 @@ public class TweetModel implements Serializable {
 
         for (int x = 0; x < array.length(); x++) {
             try {
-                JSONObject rawTweet = array.getJSONObject(x);
-                JSONObject user = rawTweet.getJSONObject("user");
-                Log.d("fromJsonArray: ", user.toString());
-                String profileName = user.getString("name");
-                Log.d("fromJsonArray:Pname ", profileName);
+                JSONObject rawTweetData = array.getJSONObject(x);
 
-                String screenName = user.getString("screen_name");
-                Log.d("fromJsonArray:screen", screenName);
+//                JSONObject tweetContent = rawTweet.getJSONObject("text");
+//                Log.d("fromJsonArray:complete ", tweetContent.toString());
 
-                Long id = user.getLong("id");
-                String body = user.getString("description");
-                Log.d("fromJsonArray:body", body);
+//                JSONObject user = rawTweetData.getJSONObject("user");
+//                String tweetText = rawTweetData.getString("text");
+//                String profileName = user.getString("name");
+//
+//                String screenName = user.getString("screen_name");
+//
+//                Long id = user.getLong("id");
+//
+//                String body = user.getString("description");
+//
+//
+//
+//                String imgContent = user.getString("profile_image_url");
+//                Log.d("fromJsonArray: img ", imgContent);
 
 
-
-                String imgContent = user.getString("profile_image_url");
-                Log.d("fromJsonArray: img ", imgContent);
-
-
-//                if (imgContent != null) {
-//                    ImgTweetModel imgTweet = new ImgTweetModel(user, name, id, screenName, imgContent);
+//                if (media != null) {
+//                    ImgTweetModel imgTweet = new ImgTweetModel(rawTweetData);
 //                    results.add(imgTweet);
 //                }
-                TxtTweetModel txtTweet = new TxtTweetModel( user);
+                TxtTweetModel txtTweet = new TxtTweetModel(rawTweetData);
                 results.add(txtTweet);
-                Log.d( "xxx ", txtTweet.toString());
+                Log.d( "xxxx", rawTweetData.toString());
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            /*
-               To differentiate what tweet type it is(img, video or txt)
 
-
-             */
-
-//            try {
-//                JSONObject article = array.getJSONObject(x);
-//                JSONArray multimedia = article.getJSONArray("multimedia");
-//                if (multimedia.length() > 0) {
-//                    JSONObject multimediaJson = multimedia.getJSONObject(0);
-//                    String thumbnail = "http://www.nytimes.com/" + multimediaJson.getString("url");
-//                    ImgArticleModel imgArticleModel = new ImgArticleModel(article, thumbnail);
-//                    webUrl = imgArticleModel.getWebUrl();
-//                    results.add(imgArticleModel);
-//                }
-//                else {
-//                    TxtArticleModel txtArticleModel = new TxtArticleModel(article);
-//                    webUrl = txtArticleModel.getWebUrl();
-//                    results.add(txtArticleModel);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
         }
         return results;
 
