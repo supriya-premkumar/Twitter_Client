@@ -15,6 +15,8 @@ import com.codepath.apps.Tweetster.R;
 import com.codepath.apps.Tweetster.activities.DetailedTweetActivity;
 import com.codepath.apps.Tweetster.models.TxtTweetModel;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -213,7 +215,7 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     private void startDetailedTweetActivity (int position) {
         Intent intent = new Intent(getmContext(), DetailedTweetActivity.class);
         Object tweets = mTweets.get(position);
-        intent.putExtra("txt_tweet", ((TxtTweetModel)tweets));
+        intent.putExtra("txt_tweet", Parcels.wrap((TxtTweetModel) tweets));
 //        if (tweets instanceof TweetModel) {
 //            intent.putExtra("url", ((TweetModel) tweets).getWebUrl());
 //        } else {

@@ -47,8 +47,14 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TimelineActivity"></activity>
-        <activity android:name=".activities.DetailedTweetActivity"></activity>
+        <activity android:name=".activities.TimelineActivity"
+            android:theme="@style/TimelineActivity">
+
+        </activity>
+        <activity android:name=".activities.DetailedTweetActivity"
+            android:theme="@style/TimelineActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -5,8 +5,8 @@ import android.text.format.DateUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -14,7 +14,8 @@ import java.util.Locale;
 /**
  * Created by supriya on 8/5/16.
  */
-public class TxtTweetModel implements Serializable {
+@Parcel
+public class TxtTweetModel {
     String tweet;
     String userName;
     String screenName;
@@ -23,6 +24,9 @@ public class TxtTweetModel implements Serializable {
     Long id;
     String mediaUrl;
 
+    public TxtTweetModel(){
+
+    }
 
     public String getMediaUrl() {
         return mediaUrl;

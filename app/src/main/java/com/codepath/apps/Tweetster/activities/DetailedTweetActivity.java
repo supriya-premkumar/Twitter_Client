@@ -8,6 +8,8 @@ import android.util.Log;
 import com.codepath.apps.Tweetster.R;
 import com.codepath.apps.Tweetster.models.TxtTweetModel;
 
+import org.parceler.Parcels;
+
 /**
  * Created by supriya on 8/4/16.
  */
@@ -19,10 +21,11 @@ public class DetailedTweetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tweet_detail);
-        Bundle extras = getIntent().getExtras();
-        TxtTweetModel txt_tweet = (TxtTweetModel) extras.get("txt_tweet");
+        TxtTweetModel tweet = (TxtTweetModel) Parcels.unwrap(getIntent().getParcelableExtra("txt_tweet"));
 
-        Log.d("DETAILED_VIEW:", txt_tweet.getTweet());
+
+        Log.d("DETAILED_VIEW:", tweet.getTweet());
+
 
 //        WebView webView = (WebView) findViewById(R.id.wvArticle);
 //

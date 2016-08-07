@@ -18,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/ivSearch"
@@ -53,14 +55,15 @@
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_height="match_parent">
 
 
 
 
-    <android.support.v7.widget.RecyclerView
+
+        <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/swipeContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
