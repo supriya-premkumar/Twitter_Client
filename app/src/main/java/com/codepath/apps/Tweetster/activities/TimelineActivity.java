@@ -1,16 +1,21 @@
 package com.codepath.apps.Tweetster.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.View;
 
 import com.codepath.apps.Tweetster.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.Tweetster.R;
 import com.codepath.apps.Tweetster.TwitterApplication;
 import com.codepath.apps.Tweetster.TwitterClient;
 import com.codepath.apps.Tweetster.adapters.TweetsRecyclerViewAdapter;
+import com.codepath.apps.Tweetster.fragments.TweetComposeFragment;
 import com.codepath.apps.Tweetster.models.TweetModel;
 import com.codepath.apps.Tweetster.models.TxtTweetModel;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,21 +30,47 @@ import cz.msebera.android.httpclient.Header;
 public class TimelineActivity extends AppCompatActivity {
     private TwitterClient client;
     private TweetsRecyclerViewAdapter adapter;
+    private FloatingActionButton fabCompose;
     private ArrayList<Object> tweets;
     private RecyclerView rvTweets;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_timeline);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                 Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                populateTimeline(0);
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
+        fabCompose = (FloatingActionButton) findViewById(R.id.fabCompose);
+        fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                composeTweetFragment();
+            }
+        });
 
         rvTweets = (RecyclerView) findViewById(R.id.rvTweets);
         // Create the arraylist (data source)
         tweets = new ArrayList<>();
         //construct the adapter from data source
         adapter = new TweetsRecyclerViewAdapter(this, tweets);
-        Log.d("onCreate: ", adapter.toString());
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
@@ -92,4 +123,33 @@ public class TimelineActivity extends AppCompatActivity {
         });
 
     }
+
+    private void composeTweetFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        TweetComposeFragment filterSettingsFragment = TweetComposeFragment.newInstance("Filter Results");
+        filterSettingsFragment.show(fm, "filter_settings_fragment");
+    }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode == Activity.RESULT_OK){
+//            String composedTweet = data.getStringExtra(ADD_TWEET);
+//            TwitterApplication.getRestClient().postTweet(composedTweet, new JsonHttpResponseHandler(){
+//
+//            });
+//        }
+//    }
+//
+//    public void postTweet(View v){
+//        EditText compose = (EditText) findViewById(R.id.etTweet);
+//        String composedTweet = compose.getText().toString();
+//
+//        Intent intent = new Intent();
+//        intent.putExtra(TimelineActivity.ADD_TWEET, composedTweet);
+//        setResult(RESULT_OK, intent);
+//        finish();
+//
+//    }
 }

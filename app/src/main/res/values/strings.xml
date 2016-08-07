@@ -7,5 +7,7 @@
     <string name="welcome_to_twitter">Welcome to Tweetster.</string>
     <string name="tag_line">Get real-time updates about </string>
     <string name="tag_line2">what matters to you.</string>
+    <string name="tweet">Tweet</string>
+    <string name="screenname">screenName</string>
 
 </resources>
