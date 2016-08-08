@@ -35,8 +35,7 @@
             android:layout_marginStart="10dp"
             android:text="sample text"
             android:textSize="16sp"
-
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold" />
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/screenName"
@@ -50,7 +49,7 @@
             android:autoLink="all"
             android:text="sample text"
             android:textSize="16sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/description"
@@ -94,20 +93,24 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Following" />
+                android:id="@+id/replyTweet"
+                android:src="@drawable/ic_reply"
+                android:background="@color/colorAccent"
+                />
+
 
             <TextView
                 android:id="@+id/numFollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"

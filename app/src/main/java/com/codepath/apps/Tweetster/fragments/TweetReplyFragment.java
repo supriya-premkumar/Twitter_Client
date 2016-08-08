@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
 import com.codepath.apps.Tweetster.TwitterApplication;
 import com.codepath.apps.Tweetster.TwitterClient;
@@ -27,17 +28,20 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by supriya on 8/7/16.
  */
-public class TweetComposeFragment extends DialogFragment {
+public class TweetReplyFragment extends DialogFragment {
     private TwitterClient client;
-    public TweetComposeFragment() {
+    public TweetReplyFragment() {
 
     }
 
-    public static TweetComposeFragment newInstance(String title) {
-        TweetComposeFragment frag = new TweetComposeFragment();
+    public static TweetReplyFragment newInstance(String tweet_id, String user_name, String screen_name, String profile_img_url) {
+        TweetReplyFragment frag = new TweetReplyFragment();
         frag.setHasOptionsMenu(true);
         Bundle args = new Bundle();
-        args.putString("title", title);
+        args.putString("tweet_id", tweet_id);
+        args.putString("user_name", user_name);
+        args.putString("screen_name", screen_name);
+        args.putString("profile_img_url", profile_img_url);
         frag.setArguments(args);
         return frag;
     }
@@ -48,8 +52,11 @@ public class TweetComposeFragment extends DialogFragment {
         View v;
         v = inflater.inflate(R.layout.tweet_compose_fragment, container, false);
 
-//        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) v.findViewById(R.id.filter_settings_toolbar);
-//        toolbar.inflateMenu(R.menu.menu_items);
+        final String tweet_id = getArguments().getString("tweet_id");
+        Log.d("SUPRIYA", tweet_id);
+        String user_name = getArguments().getString("user_name");
+        String screen_name = getArguments().getString("screen_name");
+        String profile_image_url = getArguments().getString("profile_img_url");
 
         client = TwitterApplication.getRestClient();
         TextView tvUserName = (TextView) v.findViewById(R.id.tvUserName);
@@ -58,13 +65,20 @@ public class TweetComposeFragment extends DialogFragment {
         TextInputLayout compose = (TextInputLayout) v.findViewById(R.id.textCompose);
         Button submitTweet = (Button) v.findViewById(R.id.btnsubmit);
         final EditText etTweet = (EditText) v.findViewById(R.id.etTweet);
+        etTweet.setText(screen_name);
 
+        tvUserName.setText(user_name);
+        tvScreenName.setText(screen_name);
+
+        Glide.with(this)
+                .load(profile_image_url)
+                .into(ivProfilePhoto);
 
         submitTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tweet = etTweet.getText().toString();
-                postTweet(tweet);
+                String reply = etTweet.getText().toString();
+                postReply(reply, tweet_id);
                 dismiss();
             }
         });
@@ -83,8 +97,8 @@ public class TweetComposeFragment extends DialogFragment {
     }
 
 
-    private void postTweet(String tweet){
-        client.postTweet(tweet, new JsonHttpResponseHandler() {
+    private void postReply(String reply, String tweet_id){
+        client.postReply(reply, tweet_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 Log.d("onSuccess Timeline: ", json.toString());

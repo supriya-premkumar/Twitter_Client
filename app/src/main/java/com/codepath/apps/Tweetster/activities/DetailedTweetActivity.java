@@ -1,14 +1,16 @@
 package com.codepath.apps.Tweetster.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
+import com.codepath.apps.Tweetster.fragments.TweetReplyFragment;
 import com.codepath.apps.Tweetster.models.TweetModel;
 
 import org.parceler.Parcels;
@@ -26,13 +28,14 @@ public class DetailedTweetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tweet_detail);
-        TweetModel tweet = Parcels.unwrap(getIntent().getParcelableExtra("txt_tweet"));
+        tweet = Parcels.unwrap(getIntent().getParcelableExtra("txt_tweet"));
         TextView title = (TextView) findViewById(R.id.tvDetailName);
         TextView screenName = (TextView) findViewById(R.id.screenName);
         TextView description = (TextView) findViewById(R.id.description);
         ImageView profileImage = (ImageView) findViewById(R.id.UserImage);
         ImageView background = (ImageView) findViewById(R.id.ivHeader);
         ImageView mediaImage = (ImageView) findViewById(R.id.profileImageUrl);
+        ImageView replyTweet = (ImageView) findViewById(R.id.replyTweet);
         if (tweet.getBannerUrl() != null)
             Glide.with(this)
                     .load(tweet.getBannerUrl())
@@ -64,42 +67,20 @@ public class DetailedTweetActivity extends AppCompatActivity {
 
         }
 
+        replyTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replyTweet();
+            }
+        });
 
-        Log.d("DETAILED_VIEW:", tweet.getTweet());
-
-
-//        WebView webView = (WebView) findViewById(R.id.wvArticle);
-//
-//        webView.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//                view.loadUrl(request.toString());
-//                return true;
-//            }
-//        });
-//
-//        webView.loadUrl(url);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate menu resource file.
-//        getMenuInflater().inflate(R.menu.article_display_activity_menu, menu);
-//        // Locate MenuItem with ShareActionProvider
-//        MenuItem item = menu.findItem(R.id.menu_item_share);
-//        // Fetch reference to the share action provider
-//        miShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.setType("text/plain");
-//
-//        // get reference to WebView
-//        WebView wvArticle = (WebView) findViewById(R.id.wvArticle);
-//        // pass in the URL currently being used by the WebView
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, wvArticle.getUrl());
-//
-//        miShare.setShareIntent(shareIntent);
-//        return super.onCreateOptionsMenu(menu);
-//
-//    }
+    private void replyTweet(){
+        FragmentManager fm = getSupportFragmentManager();
+        TweetReplyFragment replyFragment = TweetReplyFragment.newInstance(tweet.getTweetId(),tweet.getUserName(), tweet.getScreenName(), tweet.getProfileImageUrl());
+        replyFragment.show(fm, "filter_settings_fragment");
+    }
+
 
 }
