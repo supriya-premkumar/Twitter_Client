@@ -24,6 +24,12 @@ public class TxtTweetModel {
     Long id;
     String mediaUrl;
 
+    public String getBannerUrl() {
+        return bannerUrl;
+    }
+
+    String bannerUrl;
+
     public TxtTweetModel(){
 
     }
@@ -130,6 +136,8 @@ public class TxtTweetModel {
             this.userName = user.getString("name");
             this.screenName = "@" + user.getString("screen_name");
             this.profileImageUrl = user.getString("profile_image_url");
+            this.bannerUrl=user.has("profile_banner_url")?user.getString("profile_banner_url"):"";
+
             this.timeStamp = rawTweetData.getString("created_at");
             JSONObject media = rawTweetData.getJSONObject("entities");
             if(media.has("media")){
