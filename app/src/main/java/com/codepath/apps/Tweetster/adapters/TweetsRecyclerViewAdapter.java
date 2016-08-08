@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
 import com.codepath.apps.Tweetster.activities.DetailedTweetActivity;
-import com.codepath.apps.Tweetster.models.TxtTweetModel;
+import com.codepath.apps.Tweetster.models.TweetModel;
 
 import org.parceler.Parcels;
 
@@ -215,7 +215,7 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     private void startDetailedTweetActivity (int position) {
         Intent intent = new Intent(getmContext(), DetailedTweetActivity.class);
         Object tweets = mTweets.get(position);
-        intent.putExtra("txt_tweet", Parcels.wrap((TxtTweetModel) tweets));
+        intent.putExtra("txt_tweet", Parcels.wrap((TweetModel) tweets));
 //        if (tweets instanceof TweetModel) {
 //            intent.putExtra("url", ((TweetModel) tweets).getWebUrl());
 //        } else {
@@ -226,7 +226,7 @@ public class TweetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private void configureViewHolder(ViewHolder1 vh1, int position) {
-        TxtTweetModel tweet = (TxtTweetModel) mTweets.get(position);
+        TweetModel tweet = (TweetModel) mTweets.get(position);
         if (tweet != null) {
             vh1.getTvBody().setText(tweet.getTweet());
             vh1.getTvName().setText(tweet.getUserName());

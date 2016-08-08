@@ -1,142 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/ivHeader"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:id="@+id/ivHeader"
-            android:src="@drawable/ic_background"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:src="@drawable/ic_background" />
 
 
-        <TextView
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tvDetailName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvDetailName"
-            android:layout_gravity="left"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/ivHeader"
-            android:text="sample text"
-            android:textStyle="bold"
-            android:textSize="16sp"
+            android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
+            android:text="sample text"
+            android:textSize="16sp"
 
-            xmlns:android="http://schemas.android.com/apk/res/android">
-        </TextView>
-        <TextView
+            android:textStyle="bold"></TextView>
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/screenName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/screenName"
-            android:textSize="16sp"
-            android:autoLink="all"
-            android:layout_gravity="left"
-            android:layout_below="@+id/tvDetailName"
-            android:layout_alignStart="@+id/tvDetailName"
             android:layout_alignLeft="@+id/tvDetailName"
-            android:text="sample text"
-            android:textStyle="italic"
+            android:layout_alignStart="@+id/tvDetailName"
+            android:layout_below="@+id/tvDetailName"
+            android:layout_gravity="left"
             android:layout_marginBottom="5dp"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-        </TextView>
+            android:autoLink="all"
+            android:text="sample text"
+            android:textSize="16sp"
+            android:textStyle="italic"></TextView>
+
         <TextView
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
             android:layout_alignLeft="@+id/tvDetailName"
             android:layout_alignStart="@+id/tvDetailName"
             android:layout_below="@+id/screenName"
             android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp" />
 
         <ImageView
+            android:id="@+id/profileImageUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/description"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
             android:layout_marginTop="10dp"
-            android:id="@+id/profileImageUrl"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/description"
-            />
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
 
-        <LinearLayout android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/follow"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profileImageUrl"
-            android:layout_alignStart="@+id/tvDetailName"
             android:layout_alignLeft="@+id/tvDetailName"
-            android:orientation="horizontal"
-            android:id="@+id/follow">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvDetailName"
+            android:layout_below="@+id/profileImageUrl"
+            android:orientation="horizontal">
+
+            <TextView
                 android:id="@+id/numFollowing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Following"
-                android:layout_margin="5dp"/>
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/numFollowers"
                 android:layout_margin="5dp"
-                android:textStyle="bold">
-            </TextView>
+                android:text="Following" />
+
+            <TextView
+                android:id="@+id/numFollowers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textStyle="bold"></TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Followers"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:text="Followers" />
         </LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/follow"
 
-            android:layout_below="@+id/follow"/>
+            app:tabMode="scrollable" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sliding_tabs"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" >
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/sliding_tabs">
 
         </android.support.v4.view.ViewPager>
     </RelativeLayout>
@@ -145,8 +144,7 @@
         android:id="@+id/UserImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:layout_anchor="@+id/ivHeader"
-        app:layout_anchorGravity="bottom|center"
         android:adjustViewBounds="true"
-        />
+        app:layout_anchor="@+id/ivHeader"
+        app:layout_anchorGravity="bottom|center" />
 </android.support.design.widget.CoordinatorLayout>

@@ -48,12 +48,12 @@ public class TwitterClient extends OAuthBaseClient {
 
         RequestParams params = new RequestParams();
         params.put("count", 25);
-        if (page == 0){
-            Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: "+ String.valueOf(max_id));
+        if (page == 0) {
+            Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: " + String.valueOf(max_id));
             params.put("since_id", since_id);
 
-        } else{
-            Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: "+ String.valueOf(max_id));
+        } else {
+            Log.d("PAGINATIONMUDDU:", "Page: " + String.valueOf(page) + " since_id: " + String.valueOf(since_id) + " max_id: " + String.valueOf(max_id));
             params.put("since_id", since_id);
             params.put("max_id", max_id);
         }
@@ -74,7 +74,7 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
 
-    public void postTweet(String tweet, AsyncHttpResponseHandler handler){
+    public void postTweet(String tweet, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", tweet);
@@ -82,7 +82,7 @@ public class TwitterClient extends OAuthBaseClient {
         //client.post(apiUrl,params,handler);
     }
 
-    public void getTweet(String id, AsyncHttpResponseHandler handler){
+    public void getTweet(String id, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/show.json");
         RequestParams params = new RequestParams();
         params.put("status", id);

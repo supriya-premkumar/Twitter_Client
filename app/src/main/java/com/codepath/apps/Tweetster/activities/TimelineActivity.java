@@ -18,12 +18,12 @@ import com.codepath.apps.Tweetster.TwitterClient;
 import com.codepath.apps.Tweetster.adapters.TweetsRecyclerViewAdapter;
 import com.codepath.apps.Tweetster.fragments.TweetComposeFragment;
 import com.codepath.apps.Tweetster.models.TweetModel;
-import com.codepath.apps.Tweetster.models.TxtTweetModel;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -105,31 +105,40 @@ public class TimelineActivity extends AppCompatActivity implements DialogInterfa
             tweets.clear();
         }
         if (!tweets.isEmpty()) {
-            max_id = ((TxtTweetModel) tweets.get(0)).getId() - 1;
-            since_id = ((TxtTweetModel) tweets.get(tweets.size() - 1)).getId();
+            max_id = Long.valueOf(((TweetModel) tweets.get(0)).getTweetId()) - 1;
+            since_id = Long.valueOf(((TweetModel) tweets.get(tweets.size() - 1)).getTweetId());
         }
 
+        if (!isOnline()) {
+            tweets.addAll(TweetModel.fetchTweetsOffline());
+            Log.d("OFFLINE IDINI", tweets.toString());
+            adapter.notifyDataSetChanged();
 
-        client.getHomeTimeline(since_id, max_id, page, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                Log.d("onSuccess Timeline: ", json.toString());
-                //JSON HERE
-                //Deserialize JSON
-                //Create models and add them to the adapter
-                //load the model data into list view
-                tweets.addAll(TweetModel.fromJsonArray(json));
-                Log.d("Arraylist", json.toString());
-                adapter.notifyDataSetChanged();
+        } else {
+            client.getHomeTimeline(since_id, max_id, page, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                    Log.d("onSuccess Timeline: ", json.toString());
+                    //JSON HERE
+                    //Deserialize JSON
+                    //Create models and add them to the adapter
+                    //load the model data into list view
+
+                    tweets.addAll(TweetModel.fromJsonArray(json));
+                    Log.d("Arraylist", json.toString());
+                    adapter.notifyDataSetChanged();
 //                rvTweets.scrollToPosition(0);
 
-            }
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("onFailure: Timeline ", errorResponse.toString());
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.d("onFailure: Timeline ", errorResponse.toString());
+                }
+            });
+
+        }
+
 
     }
 
@@ -137,6 +146,21 @@ public class TimelineActivity extends AppCompatActivity implements DialogInterfa
         FragmentManager fm = getSupportFragmentManager();
         TweetComposeFragment filterSettingsFragment = TweetComposeFragment.newInstance("Filter Results");
         filterSettingsFragment.show(fm, "filter_settings_fragment");
+    }
+
+    private boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 4.2.2.2");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
 
 

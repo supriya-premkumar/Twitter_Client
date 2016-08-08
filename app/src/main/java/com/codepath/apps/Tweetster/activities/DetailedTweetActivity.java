@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
-import com.codepath.apps.Tweetster.models.TxtTweetModel;
+import com.codepath.apps.Tweetster.models.TweetModel;
 
 import org.parceler.Parcels;
 
@@ -20,13 +20,13 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  */
 public class DetailedTweetActivity extends AppCompatActivity {
 
-    private TxtTweetModel tweet;
+    private TweetModel tweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tweet_detail);
-        TxtTweetModel tweet = Parcels.unwrap(getIntent().getParcelableExtra("txt_tweet"));
+        TweetModel tweet = Parcels.unwrap(getIntent().getParcelableExtra("txt_tweet"));
         TextView title = (TextView) findViewById(R.id.tvDetailName);
         TextView screenName = (TextView) findViewById(R.id.screenName);
         TextView description = (TextView) findViewById(R.id.description);
@@ -37,6 +37,12 @@ public class DetailedTweetActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(tweet.getBannerUrl())
                     .into(background);
+        else {
+            Glide.with(this)
+                    .load(R.drawable.ic_background)
+                    .placeholder(R.drawable.ic_background)
+                    .into(background);
+        }
 
         title.setText(tweet.getUserName());
         screenName.setText(tweet.getScreenName());
@@ -51,14 +57,49 @@ public class DetailedTweetActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(thumbnail)) {
                 Glide.with(this)
                         .load(thumbnail)
+                        //.bitmapTransform(new RoundedCornersTransformation(this, 4, 1, RoundedCornersTransformation.CornerType.ALL))
                         .into(mediaImage);
+//                .resize(512, 256)
             }
 
         }
 
 
         Log.d("DETAILED_VIEW:", tweet.getTweet());
+
+
+//        WebView webView = (WebView) findViewById(R.id.wvArticle);
+//
+//        webView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+//                view.loadUrl(request.toString());
+//                return true;
+//            }
+//        });
+//
+//        webView.loadUrl(url);
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate menu resource file.
+//        getMenuInflater().inflate(R.menu.article_display_activity_menu, menu);
+//        // Locate MenuItem with ShareActionProvider
+//        MenuItem item = menu.findItem(R.id.menu_item_share);
+//        // Fetch reference to the share action provider
+//        miShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//        shareIntent.setType("text/plain");
+//
+//        // get reference to WebView
+//        WebView wvArticle = (WebView) findViewById(R.id.wvArticle);
+//        // pass in the URL currently being used by the WebView
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, wvArticle.getUrl());
+//
+//        miShare.setShareIntent(shareIntent);
+//        return super.onCreateOptionsMenu(menu);
+//
+//    }
 
 }

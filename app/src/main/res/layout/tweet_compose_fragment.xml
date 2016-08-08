@@ -9,40 +9,39 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@android:color/white">
-    </android.support.v7.widget.Toolbar>
+        android:background="@android:color/white"></android.support.v7.widget.Toolbar>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/darker_gray"
         android:layout_alignBottom="@+id/toolbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@android:color/darker_gray" />
     <!--<ImageView-->
-        <!--android:id="@+id/twitterIcon"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/ic_icon_blue"-->
-        <!--android:backgroundTint="@android:color/white"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--/>-->
+    <!--android:id="@+id/twitterIcon"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@drawable/ic_icon_blue"-->
+    <!--android:backgroundTint="@android:color/white"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--/>-->
     <!---->
 
     <ImageView
-        android:layout_below="@+id/toolbar"
         android:id="@+id/ivProfileImage"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:src="@drawable/ic_icon_blue"
-        android:backgroundTint="@android:color/white"
-
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="10dp" />
+
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="10dp"
+        android:backgroundTint="@android:color/white"
+        android:src="@drawable/ic_icon_blue" />
 
     <TextView
         android:id="@+id/tvUserName"

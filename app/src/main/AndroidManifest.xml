@@ -25,7 +25,7 @@
             android:value="RestClient.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="1" />
+            android:value="4" />
 
         <activity
             android:name=".activities.LoginActivity"
@@ -47,11 +47,13 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TimelineActivity"
+        <activity
+            android:name=".activities.TimelineActivity"
             android:theme="@style/TimelineActivity">
 
         </activity>
-        <activity android:name=".activities.DetailedTweetActivity"
+        <activity
+            android:name=".activities.DetailedTweetActivity"
             android:theme="@style/TimelineActivity">
 
         </activity>
