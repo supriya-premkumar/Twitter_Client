@@ -1,5 +1,6 @@
 package com.codepath.apps.Tweetster.activities;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.Tweetster.R;
+import com.codepath.apps.Tweetster.databinding.TweetDetailBinding;
 import com.codepath.apps.Tweetster.fragments.TweetReplyFragment;
 import com.codepath.apps.Tweetster.models.TweetModel;
 
@@ -21,21 +23,24 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * Created by supriya on 8/4/16.
  */
 public class DetailedTweetActivity extends AppCompatActivity {
-
+    private TweetDetailBinding binding;
     private TweetModel tweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tweet_detail);
+        binding = DataBindingUtil.setContentView(this, R.layout.tweet_detail);
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("txt_tweet"));
-        TextView title = (TextView) findViewById(R.id.tvDetailName);
-        TextView screenName = (TextView) findViewById(R.id.screenName);
-        TextView description = (TextView) findViewById(R.id.description);
-        ImageView profileImage = (ImageView) findViewById(R.id.UserImage);
-        ImageView background = (ImageView) findViewById(R.id.ivHeader);
-        ImageView mediaImage = (ImageView) findViewById(R.id.profileImageUrl);
-        ImageView replyTweet = (ImageView) findViewById(R.id.replyTweet);
+
+        TextView title = binding.tvDetailName;
+        TextView screenName = binding.screenName;
+
+        TextView description = binding.description;
+        ImageView profileImage = binding.UserImage;
+        ImageView background = binding.ivHeader;
+        ImageView mediaImage = binding.profileImageUrl;
+        ImageView replyTweet = binding.replyTweet;
+
         if (tweet.getBannerUrl() != null)
             Glide.with(this)
                     .load(tweet.getBannerUrl())
@@ -60,9 +65,8 @@ public class DetailedTweetActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(thumbnail)) {
                 Glide.with(this)
                         .load(thumbnail)
-                        //.bitmapTransform(new RoundedCornersTransformation(this, 4, 1, RoundedCornersTransformation.CornerType.ALL))
                         .into(mediaImage);
-//                .resize(512, 256)
+
             }
 
         }

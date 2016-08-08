@@ -55,6 +55,7 @@ public class TweetComposeFragment extends DialogFragment {
         TextView tvUserName = (TextView) v.findViewById(R.id.tvUserName);
         ImageView ivProfilePhoto = (ImageView) v.findViewById(R.id.ivProfileImage);
         TextView tvScreenName = (TextView) v.findViewById(R.id.tvUserScreenName);
+        tvScreenName.setVisibility(View.GONE);
         TextInputLayout compose = (TextInputLayout) v.findViewById(R.id.textCompose);
         Button submitTweet = (Button) v.findViewById(R.id.btnsubmit);
         final EditText etTweet = (EditText) v.findViewById(R.id.etTweet);

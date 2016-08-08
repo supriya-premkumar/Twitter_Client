@@ -26,22 +26,28 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
     private TwitterClient client;
     private TweetsRecyclerViewAdapter adapter;
-    private FloatingActionButton fabCompose;
     private ArrayList<Object> tweets;
-    private RecyclerView rvTweets;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.fabCompose) FloatingActionButton fabCompose;
+    @BindView(R.id.rvTweets) RecyclerView rvTweets;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        ButterKnife.bind(this);
+        //swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -59,7 +65,7 @@ public class TimelineActivity extends AppCompatActivity implements DialogInterfa
                 android.R.color.holo_red_light);
 
 
-        fabCompose = (FloatingActionButton) findViewById(R.id.fabCompose);
+        //fabCompose = (FloatingActionButton) findViewById(R.id.fabCompose);
         fabCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +73,7 @@ public class TimelineActivity extends AppCompatActivity implements DialogInterfa
             }
         });
 
-        rvTweets = (RecyclerView) findViewById(R.id.rvTweets);
+        //rvTweets = (RecyclerView) findViewById(R.id.rvTweets);
         // Create the arraylist (data source)
         tweets = new ArrayList<>();
         //construct the adapter from data source
